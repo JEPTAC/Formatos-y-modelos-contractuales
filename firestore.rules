@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function adminDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function isAdmin() {
+      return signedIn()
+        && adminDoc().data.active == true
+        && adminDoc().data.role == 'super_admin';
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /itaContractPublic/{documentId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /itaContractDrafts/{documentId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    match /itaContractOverrides/{documentId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /itaContractAudit/{auditId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin()
+        && request.resource.data.adminUid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
