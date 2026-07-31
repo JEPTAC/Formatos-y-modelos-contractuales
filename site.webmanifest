@@ -1,0 +1,9 @@
+{
+  "name": "Formatos contractuales ITA 3.5 - San Pedro",
+  "short_name": "ITA Contratos",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f8fc",
+  "theme_color": "#07295b",
+  "icons": []
+}
