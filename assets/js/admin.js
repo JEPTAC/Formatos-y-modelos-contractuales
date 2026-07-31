@@ -24,3 +24,36 @@ async function removeDoc(id,status){if(!confirm('¿Eliminar definitivamente este
 async function loadStatic(){try{const res=await fetch(appSettings.staticManifestUrl,{cache:'no-store'});const m=await res.json();staticItems=m.files||[]}catch{staticItems=[]}const ov=await getDocs(collection(db,appSettings.overridesCollection));const map=new Map();ov.forEach(d=>map.set(d.id,d.data()));$("#hiddenCount").textContent=[...map.values()].filter(x=>x.hidden).length;$("#staticBody").innerHTML=staticItems.length?staticItems.map(x=>{const hidden=map.get(x.id)?.hidden===true;return `<tr><td>${esc(x.id)}</td><td>${esc(x.title||x.filename)}</td><td><span class="status ${hidden?'hidden':'published'}">${hidden?'Oculto':'Visible'}</span></td><td><button class="btn ${hidden?'soft':'danger'} toggle-static" data-id="${esc(x.id)}" data-hidden="${hidden}">${hidden?'Mostrar':'Ocultar'}</button></td></tr>`}).join(''):'<tr><td colspan="4">No fue posible cargar el manifiesto estático.</td></tr>';document.querySelectorAll('.toggle-static').forEach(b=>b.onclick=()=>toggleStatic(b.dataset.id,b.dataset.hidden==='true'));}
 async function toggleStatic(id,currentlyHidden){await setDoc(doc(db,appSettings.overridesCollection,id),{hidden:!currentlyHidden,updatedAt:serverTimestamp(),updatedBy:currentUser.uid,updatedByEmail:currentUser.email||''},{merge:true});await audit(currentlyHidden?'SHOW_STATIC':'HIDE_STATIC',id,id);await Promise.all([loadStatic(),loadAudit()]);}
 async function loadAudit(){try{const snap=await getDocs(query(collection(db,appSettings.auditCollection),orderBy('createdAt','desc'),limit(100)));$("#auditBody").innerHTML=snap.empty?'<tr><td colspan="4">Sin registros.</td></tr>':[...snap.docs].map(d=>{const x=d.data();return `<tr><td>${x.createdAt?.toDate?x.createdAt.toDate().toLocaleString('es-CO'):'—'}</td><td>${esc(x.adminEmail||x.adminUid)}</td><td>${esc(x.action)}</td><td>${esc(x.title||x.documentId||'')}</td></tr>`}).join('')}catch(e){$("#auditBody").innerHTML=`<tr><td colspan="4">${esc(e.message)}</td></tr>`}}
+
+// Mejoras de experiencia del panel sin modificar la autorización de Firebase.
+const descriptionField = document.querySelector("#description");
+const descriptionCount = document.querySelector("#descriptionCount");
+if (descriptionField && descriptionCount) {
+  const updateCount = () => descriptionCount.textContent = `${descriptionField.value.length} / 5000`;
+  descriptionField.addEventListener("input", updateCount);
+  updateCount();
+}
+
+const uploadFormElement = document.querySelector("#uploadForm");
+if (uploadFormElement) {
+  uploadFormElement.addEventListener("reset", () => {
+    setTimeout(() => {
+      const version = document.querySelector("#version");
+      if (version) version.value = "0.1";
+      if (descriptionCount) descriptionCount.textContent = "0 / 5000";
+      const progress = document.querySelector("#uploadProgress");
+      if (progress) progress.style.width = "0";
+    }, 0);
+  });
+}
+
+const adminNavLinks = [...document.querySelectorAll(".admin-nav a")];
+const adminSections = adminNavLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+if ("IntersectionObserver" in window) {
+  const navObserver = new IntersectionObserver(entries => {
+    const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
+    if (!visible) return;
+    adminNavLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`));
+  }, { rootMargin: "-20% 0px -65% 0px", threshold: [0.05,0.2,0.5] });
+  adminSections.forEach(section => navObserver.observe(section));
+}

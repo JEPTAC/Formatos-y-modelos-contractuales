@@ -1,8 +1,166 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Administración | Formatos contractuales</title><link rel="stylesheet" href="assets/css/site.css"><script type="module" src="assets/js/admin.js"></script></head><body>
-<section id="loginView" class="login-shell"><div class="login-card"><h1>Acceso administrativo</h1><p>El inicio de sesión no concede permisos automáticamente. Solo se habilita el panel cuando el usuario tiene un documento activo en <code>users/{uid}</code> con rol <code>super_admin</code>.</p><button id="loginBtn" class="btn primary" type="button">Ingresar con Google</button><a class="btn line" href="index.html">Volver al portal público</a><div id="loginMsg" class="msg">Esperando autenticación.</div></div></section>
-<div id="adminView" class="admin-layout hidden"><aside class="sidebar"><h2>Panel ITA 3.5</h2><p id="adminIdentity"></p><a href="#upload">Cargar documento</a><a href="#documents">Documentos Firebase</a><a href="#static">Control estáticos</a><a href="#audit">Auditoría</a><a href="index.html" target="_blank">Abrir portal público</a><button id="logoutBtn" type="button">Cerrar sesión</button></aside><main class="admin-main"><div class="stats"><div class="stat"><strong id="publishedCount">0</strong><span>Publicados</span></div><div class="stat"><strong id="draftCount">0</strong><span>Borradores</span></div><div class="stat"><strong id="hiddenCount">0</strong><span>Estáticos ocultos</span></div><div class="stat"><strong id="totalSize">0 MB</strong><span>Almacenamiento registrado</span></div></div>
-<section id="upload" class="panel"><h2>Cargar o reemplazar documento</h2><form id="uploadForm"><div class="controls"><div class="field"><label for="title">Título *</label><input id="title" required></div><div class="field"><label for="code">Código</label><input id="code"></div><div class="field"><label for="categoryInput">Categoría *</label><input id="categoryInput" required></div></div><div class="controls"><div class="field"><label for="trd">Referencia TRD</label><input id="trd"></div><div class="field"><label for="version">Versión</label><input id="version" value="0.1"></div><div class="field"><label for="status">Estado inicial</label><select id="status"><option value="draft">Borrador privado</option><option value="published">Publicar inmediatamente</option></select></div></div><div class="field"><label for="description">Descripción</label><textarea id="description"></textarea></div><div class="controls"><div class="field"><label for="replaceStatic">Reemplaza código estático</label><input id="replaceStatic" placeholder="Ej. JC-FT-17-PROV"></div><div class="field"><label for="file">Archivo *</label><input id="file" type="file" required accept=".docx,.xlsx,.pdf,.zip,.csv,.txt"></div></div><button class="btn primary" type="submit">Guardar documento</button><div class="progress"><span id="uploadProgress"></span></div><div id="uploadMsg" class="msg">Sin operaciones pendientes.</div></form></section>
-<section id="documents" class="panel"><h2>Documentos administrados en Firebase</h2><div class="table-wrap"><table class="table"><thead><tr><th>Documento</th><th>Estado</th><th>Versión</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="documentsBody"></tbody></table></div></section>
-<section id="static" class="panel"><h2>Visibilidad de documentos estáticos</h2><p>Ocultar un archivo estático no lo elimina del repositorio GitHub, pero evita que aparezca en el catálogo público. Para eliminarlo físicamente debe retirarse mediante un commit.</p><div class="table-wrap"><table class="table"><thead><tr><th>Código</th><th>Título</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="staticBody"></tbody></table></div></section>
-<section id="audit" class="panel"><h2>Registro de auditoría</h2><div class="table-wrap"><table class="table"><thead><tr><th>Fecha</th><th>Administrador</th><th>Acción</th><th>Documento</th></tr></thead><tbody id="auditBody"></tbody></table></div></section></main></div>
-</body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#071f45">
+  <title>Administración | Formatos contractuales</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script type="module" src="assets/js/admin.js"></script>
+</head>
+<body class="admin-page">
+  <section id="loginView" class="login-shell">
+    <div class="login-decoration decoration-one" aria-hidden="true"></div>
+    <div class="login-decoration decoration-two" aria-hidden="true"></div>
+    <div class="login-card">
+      <a class="back-public" href="index.html">← Volver al portal público</a>
+      <span class="login-icon" aria-hidden="true">🔐</span>
+      <span class="section-kicker">Área restringida</span>
+      <h1>Administración documental</h1>
+      <p>El inicio de sesión identifica la cuenta, pero <strong>no concede permisos automáticamente</strong>. El panel solo se habilita cuando Firebase valida un perfil activo con rol <code>super_admin</code>.</p>
+      <div class="security-list">
+        <span>✓ Los visitantes nunca ven herramientas de edición.</span>
+        <span>✓ Los borradores permanecen privados.</span>
+        <span>✓ Las operaciones quedan registradas en auditoría.</span>
+      </div>
+      <button id="loginBtn" class="btn btn-primary full" type="button">Ingresar con Google</button>
+      <div id="loginMsg" class="message-box">Esperando autenticación.</div>
+    </div>
+  </section>
+
+  <div id="adminView" class="admin-shell hidden">
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <span class="brand-mark" aria-hidden="true">SP</span>
+        <div><strong>Panel ITA 3.5</strong><small>Gestión documental</small></div>
+      </div>
+      <div id="adminIdentity" class="admin-identity"></div>
+      <nav class="admin-nav" aria-label="Navegación del panel">
+        <a class="active" href="#dashboard"><span aria-hidden="true">◫</span> Resumen</a>
+        <a href="#upload"><span aria-hidden="true">＋</span> Cargar documento</a>
+        <a href="#documents"><span aria-hidden="true">▤</span> Documentos Firebase</a>
+        <a href="#static"><span aria-hidden="true">◉</span> Archivos de GitHub</a>
+        <a href="#audit"><span aria-hidden="true">⌁</span> Auditoría</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="index.html" target="_blank" rel="noopener">↗ Abrir portal público</a>
+        <button id="logoutBtn" type="button">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <span class="section-kicker">Control exclusivo</span>
+          <h1>Gestión de formatos contractuales</h1>
+          <p>Publique, organice y mantenga documentos sin exponer herramientas administrativas a la ciudadanía.</p>
+        </div>
+        <span class="admin-security-badge">Sesión protegida por Firebase</span>
+      </header>
+
+      <section id="dashboard" class="admin-section">
+        <div class="admin-stats">
+          <article><span class="stat-icon published" aria-hidden="true">✓</span><div><strong id="publishedCount">0</strong><small>Publicados en Firebase</small></div></article>
+          <article><span class="stat-icon draft" aria-hidden="true">✎</span><div><strong id="draftCount">0</strong><small>Borradores privados</small></div></article>
+          <article><span class="stat-icon hidden-icon" aria-hidden="true">◌</span><div><strong id="hiddenCount">0</strong><small>Estáticos ocultos</small></div></article>
+          <article><span class="stat-icon storage" aria-hidden="true">▣</span><div><strong id="totalSize">0 MB</strong><small>Almacenamiento registrado</small></div></article>
+        </div>
+
+        <div class="admin-guide">
+          <div>
+            <span class="mini-label">Flujo recomendado</span>
+            <h2>Publique con control, no directamente por costumbre</h2>
+            <p>Para reducir errores, cargue primero como borrador, revise la ficha y el archivo, confirme su versión y únicamente después publíquelo.</p>
+          </div>
+          <ol>
+            <li><span>1</span>Preparar archivo vacío y revisar datos personales.</li>
+            <li><span>2</span>Cargar como borrador privado.</li>
+            <li><span>3</span>Validar título, código, TRD, versión y descripción.</li>
+            <li><span>4</span>Publicar y verificar desde la vista ciudadana.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="upload" class="admin-panel admin-section">
+        <div class="panel-heading">
+          <div><span class="mini-label">Paso principal</span><h2>Cargar o reemplazar un documento</h2><p>Complete la ficha como si un ciudadano que no conoce el proceso necesitara entender el archivo antes de descargarlo.</p></div>
+          <span class="panel-number">01</span>
+        </div>
+
+        <form id="uploadForm" class="upload-form">
+          <fieldset>
+            <legend>1. Identificación institucional</legend>
+            <div class="form-grid three">
+              <div class="field"><label for="title">Título visible *</label><input id="title" required maxlength="300" placeholder="Ej. Formato de informe de supervisión"><small>Use un nombre comprensible y específico.</small></div>
+              <div class="field"><label for="code">Código provisional o definitivo</label><input id="code" maxlength="100" placeholder="Ej. JC-FT-17-PROV"></div>
+              <div class="field"><label for="version">Versión</label><input id="version" value="0.1" maxlength="30" placeholder="0.1"></div>
+            </div>
+            <div class="form-grid two">
+              <div class="field"><label for="categoryInput">Categoría *</label><input id="categoryInput" required maxlength="120" list="categorySuggestions" placeholder="Ej. Ejecución y supervisión"><datalist id="categorySuggestions"><option value="Planeación precontractual"><option value="Pliegos y selección"><option value="Modelos de contrato"><option value="Ejecución y supervisión"><option value="Cierre y archivo"><option value="Guía y publicación"></datalist></div>
+              <div class="field"><label for="trd">Referencia TRD</label><input id="trd" maxlength="160" placeholder="Ej. 230-15-05"><small>Indique “Pendiente de validación” cuando no esté confirmada.</small></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>2. Explicación para la ciudadanía</legend>
+            <div class="field"><label for="description">Descripción didáctica *</label><textarea id="description" required maxlength="5000" placeholder="Explique para qué sirve, en qué etapa se utiliza, quién lo diligencia y qué decisión soporta."></textarea><div class="textarea-helper"><span>Ejemplo: “Este formato documenta el seguimiento técnico, administrativo, financiero y jurídico realizado por el supervisor…”</span><span id="descriptionCount">0 / 5000</span></div></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>3. Publicación y archivo</legend>
+            <div class="form-grid three">
+              <div class="field"><label for="status">Estado inicial</label><select id="status"><option value="draft">Borrador privado — recomendado</option><option value="published">Publicar inmediatamente</option></select><small>El borrador solo puede verlo el superadministrador.</small></div>
+              <div class="field"><label for="replaceStatic">Reemplaza documento estático</label><input id="replaceStatic" maxlength="160" placeholder="Ej. JC-FT-17-PROV"><small>La nueva publicación sustituirá visualmente ese código.</small></div>
+              <div class="field"><label for="file">Archivo *</label><input id="file" type="file" required accept=".docx,.xlsx,.pdf,.zip,.csv,.txt"><small>DOCX, XLSX, PDF, ZIP, CSV o TXT. Máximo 50 MB.</small></div>
+            </div>
+          </fieldset>
+
+          <div class="publication-warning">
+            <strong>Antes de guardar:</strong> confirme que el archivo no contiene cédulas, firmas, cuentas bancarias, datos personales, ejemplos diligenciados ni información reservada.
+          </div>
+
+          <div class="upload-actions">
+            <button class="btn btn-primary" type="submit">Guardar documento</button>
+            <button id="resetUpload" class="btn btn-secondary" type="reset">Limpiar formulario</button>
+          </div>
+          <div class="progress" aria-label="Progreso de carga"><span id="uploadProgress"></span></div>
+          <div id="uploadMsg" class="message-box" aria-live="polite">Sin operaciones pendientes.</div>
+        </form>
+      </section>
+
+      <section id="documents" class="admin-panel admin-section">
+        <div class="panel-heading">
+          <div><span class="mini-label">Contenido dinámico</span><h2>Documentos administrados en Firebase</h2><p>Los borradores son privados. Los documentos publicados aparecen automáticamente en el catálogo ciudadano.</p></div>
+          <span class="panel-number">02</span>
+        </div>
+        <div class="admin-explanation-grid">
+          <div><strong>Borrador privado</strong><p>Úselo mientras revisa el documento. No es visible ni descargable para visitantes.</p></div>
+          <div><strong>Publicado</strong><p>Aparece en el catálogo público y puede ser consultado o descargado por cualquier persona.</p></div>
+          <div><strong>Pasar a borrador</strong><p>Retira el documento de la vista pública sin perder su ficha ni el archivo.</p></div>
+        </div>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Documento</th><th>Estado</th><th>Versión</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="documentsBody"><tr><td colspan="5">Cargando…</td></tr></tbody></table></div>
+      </section>
+
+      <section id="static" class="admin-panel admin-section">
+        <div class="panel-heading">
+          <div><span class="mini-label">Repositorio GitHub</span><h2>Visibilidad de documentos estáticos</h2><p>Estos archivos forman parte del repositorio. Firebase puede ocultarlos del catálogo, pero no puede eliminarlos físicamente de GitHub.</p></div>
+          <span class="panel-number">03</span>
+        </div>
+        <div class="info-callout"><strong>Ejemplo:</strong> si publica en Firebase una versión aprobada del código <code>JC-FT-17-PROV</code>, puede reemplazarlo visualmente o esconder el documento estático anterior. Para retirarlo del repositorio debe eliminarlo mediante un commit en GitHub.</div>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Código</th><th>Título</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="staticBody"><tr><td colspan="4">Cargando…</td></tr></tbody></table></div>
+      </section>
+
+      <section id="audit" class="admin-panel admin-section">
+        <div class="panel-heading">
+          <div><span class="mini-label">Trazabilidad</span><h2>Registro de auditoría</h2><p>Cada carga, publicación, ocultamiento o eliminación queda asociada al administrador autenticado y a una fecha.</p></div>
+          <span class="panel-number">04</span>
+        </div>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Fecha</th><th>Administrador</th><th>Acción</th><th>Documento</th></tr></thead><tbody id="auditBody"><tr><td colspan="4">Cargando…</td></tr></tbody></table></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="adminToast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,6 +1,434 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Formatos y modelos contractuales ITA 3.5 de la Alcaldía Municipal de San Pedro, Valle del Cauca."><meta name="theme-color" content="#082b5c"><title>Formatos contractuales | San Pedro, Valle</title><link rel="stylesheet" href="assets/css/site.css"><script type="module" src="assets/js/public.js"></script></head><body>
-<header class="top"><div class="wrap nav"><a class="brand" href="index.html">Alcaldía de San Pedro · ITA 3.5</a><div class="nav-actions"><span class="readonly-badge">Consulta pública · solo lectura</span><a class="btn line" href="admin.html">Acceso administrador</a></div></div></header>
-<main><section class="hero"><div class="wrap"><h1>Formatos y modelos contractuales</h1><p>Repositorio público de consulta, verificación y descarga. Las operaciones de carga, modificación, publicación, ocultamiento y eliminación están reservadas exclusivamente al administrador autenticado.</p><div class="notice"><strong>Estado institucional:</strong> modelos vacíos y transitorios, en proceso de revisión y aprobación junto con la actualización de las Tablas de Retención Documental y el diseño del aplicativo institucional de calidad y gestión documental automática.</div></div></section>
-<section class="section"><div class="wrap"><h2>Documentos disponibles</h2><p class="sub">El catálogo combina los archivos estáticos del repositorio con los documentos publicados desde Firebase por el administrador.</p><div class="controls"><div class="field"><label for="search">Buscar</label><input id="search" type="search" placeholder="Nombre, código, TRD o categoría"></div><div class="field"><label for="category">Categoría</label><select id="category"><option value="">Todas</option></select></div><div class="field"><label for="origin">Origen</label><select id="origin"><option value="">Todos</option><option value="static">Repositorio GitHub</option><option value="firebase">Publicados desde Firebase</option></select></div></div><div id="catalog" class="grid" aria-live="polite"><div class="empty">Cargando documentos…</div></div></div></section></main>
-<footer class="footer"><div class="wrap"><strong>Alcaldía Municipal de San Pedro, Valle del Cauca</strong><p>Los visitantes pueden consultar, verificar y descargar. Ninguna operación de administración está habilitada sin autenticación y autorización de servidor.</p></div></footer>
-</body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Repositorio didáctico, verificable y de solo lectura de formatos y modelos contractuales ITA 3.5 de la Alcaldía Municipal de San Pedro, Valle del Cauca.">
+  <meta name="theme-color" content="#07295b">
+  <title>Formatos y modelos contractuales | San Pedro, Valle</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script type="module" src="assets/js/public.js"></script>
+</head>
+<body class="public-page">
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="site-header" id="inicio">
+    <div class="wrap header-row">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark" aria-hidden="true">SP</span>
+        <span>
+          <strong>Alcaldía de San Pedro</strong>
+          <small>Transparencia · ITA 3.5</small>
+        </span>
+      </a>
+
+      <button id="menuToggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainNav">
+        <span aria-hidden="true">☰</span> Menú
+      </button>
+
+      <nav id="mainNav" class="main-nav" aria-label="Navegación principal">
+        <a href="#orientacion">Cómo funciona</a>
+        <a href="#ruta">Ruta contractual</a>
+        <a href="#catalogo">Formatos</a>
+        <a href="#verificacion">Verificar</a>
+        <a href="#preguntas">Preguntas</a>
+      </nav>
+
+      <a class="admin-entry" href="admin.html" aria-label="Acceso exclusivo para administrador">Administración</a>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero-section" aria-labelledby="heroTitle">
+      <div class="hero-orbit orbit-one" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-two" aria-hidden="true"></div>
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+
+      <div class="wrap hero-layout">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Consulta pública · solo lectura</div>
+          <h1 id="heroTitle">Entienda, consulte y descargue los <em>formatos contractuales</em></h1>
+          <p class="hero-lead">Esta micropágina organiza los modelos de contrato, formatos precontractuales, actas, informes y listas de chequeo de la Alcaldía. Además de descargar un archivo, podrá comprender <strong>para qué sirve, en qué momento se usa, qué debe verificarse y cómo comprobar su integridad</strong>.</p>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="#orientacion">Aprender a usar la página</a>
+            <a class="btn btn-glass" href="#catalogo">Ir directamente al catálogo</a>
+          </div>
+          <div class="hero-trust" aria-label="Garantías del portal">
+            <span>✓ Sin edición pública</span>
+            <span>✓ Descarga directa</span>
+            <span>✓ Control administrativo</span>
+            <span>✓ Verificación SHA-256</span>
+          </div>
+        </div>
+
+        <aside class="hero-visual reveal" aria-label="Resumen del repositorio">
+          <div class="document-stack" aria-hidden="true">
+            <div class="paper paper-back"></div>
+            <div class="paper paper-middle"></div>
+            <div class="paper paper-front">
+              <span class="paper-seal">ITA 3.5</span>
+              <strong>Documento institucional</strong>
+              <div class="paper-line wide"></div>
+              <div class="paper-line"></div>
+              <div class="paper-line short"></div>
+              <div class="paper-grid">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="paper-signature">Modelo vacío · verificable</div>
+            </div>
+          </div>
+          <div class="floating-chip chip-a">TRD</div>
+          <div class="floating-chip chip-b">DOCX</div>
+          <div class="floating-chip chip-c">SECOP</div>
+          <div class="floating-chip chip-d">SHA-256</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="metrics-band" aria-label="Indicadores del repositorio">
+      <div class="wrap metrics-grid">
+        <article class="metric reveal"><strong class="counter" id="metricDocuments" data-target="0">0</strong><span>documentos visibles</span></article>
+        <article class="metric reveal"><strong class="counter" id="metricCategories" data-target="0">0</strong><span>categorías organizadas</span></article>
+        <article class="metric reveal"><strong id="metricOrigins">2</strong><span>fuentes integradas</span></article>
+        <article class="metric reveal"><strong>100%</strong><span>consulta pública de solo lectura</span></article>
+      </div>
+    </section>
+
+    <section id="orientacion" class="section section-soft">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Orientación ciudadana</span>
+          <h2>No necesita conocer contratación pública para encontrar un formato</h2>
+          <p>La página está organizada para responder cuatro preguntas sencillas: <strong>qué necesito hacer, en qué etapa estoy, qué documento corresponde y qué debo revisar antes de utilizarlo</strong>.</p>
+        </div>
+
+        <div class="how-grid">
+          <article class="how-card reveal">
+            <span class="how-number">01</span>
+            <div class="how-icon" aria-hidden="true">⌕</div>
+            <h3>Identifique su necesidad</h3>
+            <p>Use el asistente de orientación. Por ejemplo: “necesito iniciar la ejecución”, “debo evaluar propuestas” o “quiero cerrar el expediente”.</p>
+          </article>
+          <article class="how-card reveal">
+            <span class="how-number">02</span>
+            <div class="how-icon" aria-hidden="true">⇢</div>
+            <h3>Ubique la etapa</h3>
+            <p>Los documentos se distribuyen desde la planeación hasta el cierre. Cada etapa tiene una explicación, ejemplos y acceso directo al catálogo filtrado.</p>
+          </article>
+          <article class="how-card reveal">
+            <span class="how-number">03</span>
+            <div class="how-icon" aria-hidden="true">✓</div>
+            <h3>Revise la ficha</h3>
+            <p>Antes de descargar, consulte el código provisional, referencia TRD, versión, finalidad, ejemplo de uso y advertencias aplicables.</p>
+          </article>
+          <article class="how-card reveal">
+            <span class="how-number">04</span>
+            <div class="how-icon" aria-hidden="true">⇩</div>
+            <h3>Descargue y verifique</h3>
+            <p>Abra o descargue el archivo y, cuando exista huella publicada, compárela desde el verificador local sin enviar el documento a un servidor.</p>
+          </article>
+        </div>
+
+        <div class="assistant-shell reveal" id="assistant">
+          <div class="assistant-copy">
+            <span class="mini-label">Asistente rápido</span>
+            <h3>¿Qué necesita hacer?</h3>
+            <p>Seleccione la situación más parecida. El asistente mostrará la etapa y los documentos que normalmente deberían revisarse. La recomendación es orientadora y no sustituye el análisis jurídico del proceso concreto.</p>
+          </div>
+          <div class="assistant-control">
+            <label for="needSelector">Seleccione una necesidad</label>
+            <select id="needSelector">
+              <option value="">Elija una opción…</option>
+              <option value="planear">Definir la necesidad, alcance, presupuesto o riesgos</option>
+              <option value="tipo">Verificar si aplica un Documento Tipo</option>
+              <option value="seleccionar">Invitar, recibir o evaluar propuestas</option>
+              <option value="contratar">Preparar un modelo de contrato</option>
+              <option value="iniciar">Iniciar, suspender o reiniciar la ejecución</option>
+              <option value="pagar">Revisar informes y autorizar un pago</option>
+              <option value="modificar">Solicitar una adición, prórroga o modificación</option>
+              <option value="cerrar">Terminar, recibir, liquidar o archivar</option>
+            </select>
+            <div id="assistantResult" class="assistant-result" aria-live="polite">
+              Seleccione una situación para recibir una orientación práctica.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ruta" class="section">
+      <div class="wrap">
+        <div class="section-heading centered reveal">
+          <span class="section-kicker">Ruta documental</span>
+          <h2>El proceso contractual explicado como un recorrido</h2>
+          <p>Cada estación agrupa documentos con una finalidad distinta. Pulse una etapa para conocerla y filtrar automáticamente el catálogo.</p>
+        </div>
+
+        <div class="journey" role="list" aria-label="Etapas del proceso contractual">
+          <button class="journey-step reveal" type="button" data-stage="Planeación" role="listitem">
+            <span class="journey-icon" aria-hidden="true">01</span>
+            <strong>Planeación</strong>
+            <small>Necesidad, sector, presupuesto, riesgos y Documento Tipo.</small>
+          </button>
+          <span class="journey-arrow" aria-hidden="true">→</span>
+          <button class="journey-step reveal" type="button" data-stage="Selección" role="listitem">
+            <span class="journey-icon" aria-hidden="true">02</span>
+            <strong>Selección</strong>
+            <small>Invitación, pliego, recepción y evaluación de ofertas.</small>
+          </button>
+          <span class="journey-arrow" aria-hidden="true">→</span>
+          <button class="journey-step reveal" type="button" data-stage="Contratación" role="listitem">
+            <span class="journey-icon" aria-hidden="true">03</span>
+            <strong>Contratación</strong>
+            <small>Clausulado, obligaciones, garantías y perfeccionamiento.</small>
+          </button>
+          <span class="journey-arrow" aria-hidden="true">→</span>
+          <button class="journey-step reveal" type="button" data-stage="Ejecución" role="listitem">
+            <span class="journey-icon" aria-hidden="true">04</span>
+            <strong>Ejecución</strong>
+            <small>Inicio, seguimiento, informes, pagos y modificaciones.</small>
+          </button>
+          <span class="journey-arrow" aria-hidden="true">→</span>
+          <button class="journey-step reveal" type="button" data-stage="Cierre" role="listitem">
+            <span class="journey-icon" aria-hidden="true">05</span>
+            <strong>Cierre y archivo</strong>
+            <small>Recibo final, liquidación, índice y transferencia documental.</small>
+          </button>
+        </div>
+
+        <div id="stageExplanation" class="stage-explanation reveal" aria-live="polite">
+          <div>
+            <span class="mini-label">Vista general</span>
+            <h3>Seleccione una etapa del recorrido</h3>
+            <p>Al seleccionar una etapa verá su objetivo, un ejemplo práctico y los controles mínimos que deberían revisarse.</p>
+          </div>
+          <button id="stageCatalogButton" class="btn btn-primary" type="button" disabled>Ver documentos de esta etapa</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-deep" aria-labelledby="conceptTitle">
+      <div class="wrap concept-layout">
+        <div class="concept-copy reveal">
+          <span class="section-kicker light">Conceptos importantes</span>
+          <h2 id="conceptTitle">Modelo interno no significa Documento Tipo oficial</h2>
+          <p>Un modelo interno sirve como punto de partida institucional. Un <strong>Documento Tipo</strong>, en cambio, es un instrumento estandarizado expedido por Colombia Compra Eficiente para determinados sectores y procesos. Cuando sea obligatorio, su versión oficial vigente prevalece sobre cualquier modelo municipal.</p>
+          <div class="concept-checks">
+            <span>✓ Consultar el repositorio oficial antes de estructurar el proceso.</span>
+            <span>✓ Documentar expresamente si aplica, no aplica o requiere concepto.</span>
+            <span>✓ Conservar la versión y fecha de consulta utilizadas.</span>
+          </div>
+        </div>
+        <div class="comparison reveal" aria-label="Comparación entre modelo interno y Documento Tipo">
+          <article>
+            <span class="comparison-label">Modelo interno</span>
+            <h3>Guía adaptable</h3>
+            <p>Se diligencia según el objeto, modalidad, presupuesto, riesgos y condiciones reales del proceso.</p>
+          </article>
+          <div class="versus" aria-hidden="true">≠</div>
+          <article class="official-card">
+            <span class="comparison-label">Documento Tipo</span>
+            <h3>Instrumento oficial</h3>
+            <p>Debe utilizarse en los supuestos obligatorios y conforme a la versión vigente publicada por la Agencia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo" class="section catalog-section">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Repositorio documental</span>
+          <h2>Explore los formatos con contexto, no solo como una lista de archivos</h2>
+          <p>Abra la ficha detallada para conocer el propósito, un ejemplo de uso, la etapa, la referencia TRD y las precauciones antes de descargar.</p>
+        </div>
+
+        <div class="catalog-toolbar reveal">
+          <div class="search-field">
+            <label for="search">Buscar por nombre, código, TRD o palabra clave</label>
+            <div class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Ejemplo: supervisión, obra, liquidación, 230-15…"></div>
+          </div>
+          <div class="filter-field">
+            <label for="category">Categoría</label>
+            <select id="category"><option value="">Todas las categorías</option></select>
+          </div>
+          <div class="filter-field">
+            <label for="origin">Origen</label>
+            <select id="origin">
+              <option value="">Todos los orígenes</option>
+              <option value="static">Repositorio GitHub</option>
+              <option value="firebase">Publicados por el administrador</option>
+            </select>
+          </div>
+          <div class="view-switch" aria-label="Forma de visualización">
+            <button class="view-button active" type="button" data-view="cards" aria-label="Vista de tarjetas">▦</button>
+            <button class="view-button" type="button" data-view="compact" aria-label="Vista compacta">☷</button>
+          </div>
+        </div>
+
+        <div class="catalog-status reveal">
+          <p id="resultCount">Preparando catálogo…</p>
+          <button id="clearFilters" class="text-button" type="button">Limpiar filtros</button>
+        </div>
+
+        <div id="catalog" class="document-grid" aria-live="polite">
+          <div class="empty-state loading-state"><span class="loader" aria-hidden="true"></span>Cargando documentos públicos…</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="verificacion" class="section section-soft">
+      <div class="wrap">
+        <div class="section-heading centered reveal">
+          <span class="section-kicker">Integridad documental</span>
+          <h2>Compruebe que el archivo descargado coincide con el publicado</h2>
+          <p>La huella SHA-256 funciona como una identificación digital. Si el archivo cambia, aunque sea mínimamente, la huella también cambia. La comprobación se realiza dentro de su navegador.</p>
+        </div>
+
+        <div class="verification-grid">
+          <article class="verification-card reveal">
+            <div class="verification-icon" aria-hidden="true">1</div>
+            <h3>Descargue un documento</h3>
+            <p>Utilice el botón de descarga del catálogo. Los archivos públicos no pueden ser editados desde esta micropágina.</p>
+          </article>
+          <article class="verification-card reveal">
+            <div class="verification-icon" aria-hidden="true">2</div>
+            <h3>Seleccione el archivo</h3>
+            <p>Arrástrelo al verificador o búsquelo en su equipo. El contenido no se envía a Firebase ni a otro servidor.</p>
+          </article>
+          <article class="verification-card reveal">
+            <div class="verification-icon" aria-hidden="true">3</div>
+            <h3>Compare la huella</h3>
+            <p>Si coincide con el manifiesto, el navegador indicará que corresponde al archivo publicado.</p>
+          </article>
+        </div>
+
+        <div class="verifier-shell reveal">
+          <div class="verifier-copy">
+            <span class="mini-label">Verificador local</span>
+            <h3>Arrastre aquí un archivo descargado</h3>
+            <p>Para una comparación automática, seleccione primero “Verificar” en la ficha de un documento que tenga huella publicada.</p>
+          </div>
+          <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Seleccionar archivo para verificar">
+            <input id="verifyFile" type="file" hidden>
+            <span class="drop-icon" aria-hidden="true">⇧</span>
+            <strong>Soltar archivo o hacer clic para seleccionarlo</strong>
+            <small id="expectedFile">No se ha seleccionado un documento esperado.</small>
+          </div>
+          <div id="verifyResult" class="verify-result" aria-live="polite">Resultado pendiente.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="approvalTitle">
+      <div class="wrap approval-layout">
+        <div class="approval-copy reveal">
+          <span class="section-kicker">Estado institucional</span>
+          <h2 id="approvalTitle">¿Por qué se publican si todavía están en aprobación?</h2>
+          <p>La publicación permite que la ciudadanía conozca los modelos disponibles y que la entidad atienda el criterio de transparencia. Sin embargo, se mantiene una advertencia clara: los documentos son <strong>vacíos, editables y transitorios</strong>, y deben reemplazarse por sus versiones oficiales cuando finalicen la revisión jurídica, técnica, de calidad y archivística.</p>
+          <p>Paralelamente, la entidad adelanta la actualización de sus Tablas de Retención Documental y el diseño del aplicativo institucional que controlará códigos, versiones, flujos de aprobación, expedientes electrónicos, alertas y publicación.</p>
+        </div>
+        <ol class="approval-steps reveal">
+          <li><span>1</span><div><strong>Publicación transitoria</strong><small>Modelos vacíos con advertencia y control de acceso.</small></div></li>
+          <li><span>2</span><div><strong>Revisión institucional</strong><small>Jurídica, técnica, calidad, archivo, datos y accesibilidad.</small></div></li>
+          <li><span>3</span><div><strong>Actualización de TRD</strong><small>Series, subseries, tipos, retención y disposición.</small></div></li>
+          <li><span>4</span><div><strong>Aprobación definitiva</strong><small>Código, versión, responsables y fecha de vigencia.</small></div></li>
+          <li><span>5</span><div><strong>Aplicativo automático</strong><small>Generación controlada, trazabilidad, expediente y auditoría.</small></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="preguntas" class="section section-soft">
+      <div class="wrap narrow">
+        <div class="section-heading centered reveal">
+          <span class="section-kicker">Preguntas frecuentes</span>
+          <h2>Respuestas claras antes de utilizar los archivos</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <details>
+            <summary>¿Estos documentos ya están aprobados definitivamente?</summary>
+            <div><p>No. El repositorio los identifica como modelos transitorios en proceso de revisión y aprobación. La ficha de cada documento muestra su versión y estado. Cuando exista una versión oficial aprobada, el administrador deberá sustituir o retirar el borrador.</p></div>
+          </details>
+          <details>
+            <summary>¿Puedo copiar el formato y utilizarlo sin revisar nada?</summary>
+            <div><p>No es recomendable. Cada proceso tiene un objeto, modalidad, presupuesto, riesgos, requisitos, garantías y condiciones propias. El modelo sirve como estructura, pero debe diligenciarse y revisarse para el caso concreto.</p></div>
+          </details>
+          <details>
+            <summary>¿Qué ocurre si aplica un Documento Tipo?</summary>
+            <div><p>Debe utilizarse la versión oficial vigente de Colombia Compra Eficiente dentro de su ámbito de aplicación. El modelo interno no debe alterar reglas obligatorias ni presentarse como si fuera un Documento Tipo oficial.</p></div>
+          </details>
+          <details>
+            <summary>¿Dónde están los documentos definitivos de un contrato real?</summary>
+            <div><p>Los documentos específicos de cada proceso deben consultarse en SECOP y en los canales institucionales que correspondan. Esta página publica modelos vacíos; no reemplaza el expediente contractual ni la publicidad de SECOP.</p></div>
+          </details>
+          <details>
+            <summary>¿Un visitante puede cargar, modificar u ocultar archivos?</summary>
+            <div><p>No. La vista pública funciona únicamente para consulta y descarga. Las operaciones administrativas requieren autenticación y un rol activo de superadministrador validado por las reglas de Firebase.</p></div>
+          </details>
+          <details>
+            <summary>¿Por qué aparecen referencias TRD provisionales?</summary>
+            <div><p>Las referencias permiten relacionar temporalmente los formatos con las series y subseries contractuales identificadas. Deben confirmarse o reemplazarse cuando culmine el proceso formal de actualización y aprobación de las Tablas de Retención Documental.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section source-section">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Fuentes de contraste</span>
+          <h2>Consulte también los sistemas oficiales</h2>
+        </div>
+        <div class="source-grid">
+          <a class="source-card reveal" href="https://www.colombiacompra.gov.co/documentos-tipo" target="_blank" rel="noopener">
+            <span aria-hidden="true">↗</span><strong>Documentos Tipo</strong><small>Versiones y anexos oficiales de Colombia Compra Eficiente.</small>
+          </a>
+          <a class="source-card reveal" href="https://www.colombiacompra.gov.co/secop" target="_blank" rel="noopener">
+            <span aria-hidden="true">↗</span><strong>SECOP</strong><small>Documentos definitivos y trazabilidad de procesos contractuales.</small>
+          </a>
+          <a class="source-card reveal" href="https://www.sanpedro-valle.gov.co/" target="_blank" rel="noopener">
+            <span aria-hidden="true">↗</span><strong>Sede electrónica</strong><small>Portal oficial de la Alcaldía Municipal de San Pedro.</small>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-layout">
+      <div>
+        <strong>Alcaldía Municipal de San Pedro, Valle del Cauca</strong>
+        <p>Repositorio público de formatos y modelos contractuales. Los visitantes únicamente pueden consultar, verificar y descargar.</p>
+      </div>
+      <div class="footer-meta">
+        <span>NIT 800.100.526-3</span>
+        <span>Actualización institucional: 2026</span>
+        <a href="admin.html">Acceso administrativo</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="documentModal" class="document-modal" aria-labelledby="modalTitle">
+    <div class="modal-layout">
+      <button id="closeModal" class="modal-close" type="button" aria-label="Cerrar ventana">×</button>
+      <div id="modalPreview" class="modal-preview" aria-hidden="true"></div>
+      <div class="modal-copy">
+        <div id="modalChips" class="chips"></div>
+        <h2 id="modalTitle">Detalle del documento</h2>
+        <p id="modalDescription"></p>
+        <div class="modal-section"><h3>¿Para qué sirve?</h3><p id="modalPurpose"></p></div>
+        <div class="modal-section"><h3>Ejemplo práctico</h3><p id="modalExample"></p></div>
+        <div class="modal-section"><h3>Antes de utilizarlo, verifique</h3><ul id="modalChecks"></ul></div>
+        <dl id="modalMeta" class="modal-meta"></dl>
+        <div class="modal-actions">
+          <a id="modalDownload" class="btn btn-primary" href="#" target="_blank" rel="noopener">Abrir o descargar</a>
+          <button id="modalVerify" class="btn btn-secondary" type="button">Verificar archivo</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
